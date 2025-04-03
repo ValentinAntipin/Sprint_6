@@ -1,9 +1,9 @@
-from conftest import driver
 from telnetlib import EC
 from selenium.webdriver.firefox.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from src.pages.base_page import BasePage
-from src.locators.questions_locator import By, QuestionsLocators
+from src.locators.questions_locators import QuestionsLocators
+import allure
 
 
 class QuestionsPage(BasePage):
@@ -11,10 +11,12 @@ class QuestionsPage(BasePage):
         super().__init__(driver)
         self.driver = driver
 
+    @allure.step("Прокрутка страницы до указанного элемента")
     def scroll_to_element(self, element):
         #Прокрутка страницы до указанного элемента
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
+    @allure.step("Открытие вопроса №{question_number}")
     def open_question(self, question_number: int):
         # Локаторы для каждого вопроса
         locators = {
@@ -42,6 +44,7 @@ class QuestionsPage(BasePage):
         else:
             raise ValueError(f"Вопрос {question_number} не найден!")
 
+    @allure.step("Открытие вопроса на основе номера")
     def get_question_text(self, question_number: int):
         # Получаем текст вопроса на основе номера
         locators = {
