@@ -1,9 +1,11 @@
 from src.locators.order_page_locators import NAME_FIELD, SURNAME_FIELD, ADDRESS_FIELD, STATION_FIELD, PHONE_FIELD, SUBMIT_BUTTON, DATE_FIELD, DROPDOWN_FIELD, COLOR_FIELD, ORDER_BUTTON, ORDER2_BUTTON
 import allure
+from src.pages.base_page import BasePage
 
-class OrderPage:
+
+class OrderPage(BasePage):
     def __init__(self, driver):
-        self.driver = driver
+        super().__init__(driver)
 
     @allure.step("Заполнение формы заказа")
     def fill_order_form(self, name, surname, address, station, phone):
@@ -17,7 +19,7 @@ class OrderPage:
     @allure.step("Нажатие на кнопку 'Далее'")
     def click_submit_button(self):
         # Клик на кнопку далее
-        self.driver.find_element(*SUBMIT_BUTTON).click()
+        self.click_element(*SUBMIT_BUTTON)
 
     @allure.step("Заполнение дополнительных полей заказа")
     def fill_additional_order_fields(self, date, rental_period, color):
@@ -29,9 +31,9 @@ class OrderPage:
     @allure.step("Нажатие кнопки заказать")
     def submit_order(self):
         # Нажатие кнопки заказа
-        self.driver.find_element(*ORDER_BUTTON).click()
+        self.click_element(*ORDER_BUTTON)
 
     @allure.step("Подтверждение заказа")
     def confirm_order(self):
         # Подтверждение заказа
-        self.driver.find_element(*ORDER2_BUTTON).click()
+        self.click_element(*ORDER2_BUTTON)

@@ -1,6 +1,5 @@
-from telnetlib import EC
 from selenium.webdriver.firefox.webdriver import WebDriver
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
 from src.pages.base_page import BasePage
 from src.locators.questions_locators import QuestionsLocators
 import allure
@@ -9,12 +8,7 @@ import allure
 class QuestionsPage(BasePage):
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
-        self.driver = driver
 
-    @allure.step("Прокрутка страницы до указанного элемента")
-    def scroll_to_element(self, element):
-        #Прокрутка страницы до указанного элемента
-        self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
     @allure.step("Открытие вопроса №{question_number}")
     def open_question(self, question_number: int):
@@ -32,13 +26,8 @@ class QuestionsPage(BasePage):
 
         if question_number in locators:
             # Находим элемент
-            question = WebDriverWait(self.driver, 10).until(
-                EC.presence_of_element_located(locators[question_number])
-            )
-
-            # Прокручиваем страницу до элемента
-            self.scroll_to_element(question)
-
+            question = self.find_element(*locators[question_number])
+            self.scroll_to_element(*locators[question_number])
             # Кликаем по элементу
             question.click()
         else:
@@ -59,7 +48,7 @@ class QuestionsPage(BasePage):
         }
 
         if question_number in locators:
-            question = self.driver.find_element(*locators[question_number])
+            question = self.find_element(*locators[question_number])
             return question.text  # Возвращаем текст вопроса
         else:
             raise ValueError(f"Вопрос {question_number} не найден!")

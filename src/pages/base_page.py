@@ -5,28 +5,29 @@ import allure
 class BasePage:
     def __init__(self, driver):
         self.driver = driver
+        self.wait = WebDriverWait(driver, 15)
 
     @allure.step("Поиск элемента с ожиданием")
-    def find_element(self, by, value, timeout=15):
+    def find_element(self, by, value):
         #Ожидание присутствия элемента на странице с увеличенным временем
-        return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located((by, value)))
+        return self.wait.until(EC.presence_of_element_located((by, value)))
 
     @allure.step("Клик на элемент")
     def click_element(self, by, value):
-        #Клик на элемент, используя явное ожидание
-        element = WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((by, value)))
+        #Клик на элемент
+        element = self.find_element(by, value)
         element.click()
 
     @allure.step("Получение текста элемента")
     def get_element_text(self, by, value):
-        #Получение текста элемента с ожиданием его появления
-        element = WebDriverWait(self.driver, 15).until(EC.presence_of_element_located((by, value)))
+        #Получение текста элемента
+        element = self.find_element(by, value)
         return element.text
 
     @allure.step("Прокрутка страницы до элемента")
     def scroll_to_element(self, by, value):
         #Прокрутка страницы до элемента с ожиданием доступности для клика
-        element = WebDriverWait(self.driver, 15).until(EC.element_to_be_clickable((by, value)))  # Ожидаем кликабельности
+        element = self.wait.until(EC.element_to_be_clickable((by, value)))  # Ожидаем кликабельности
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
 
     @allure.step("Прокрутка страницы до самого низа")
