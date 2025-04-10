@@ -9,8 +9,8 @@ def driver():
 
     service = Service(executable_path=GeckoDriverManager().install())
     driver = webdriver.Firefox(service=service)
+    driver.implicitly_wait(15)
     driver.get(Config.URL)  # Страница приложения самокаты
 
-    print(driver.title)
     yield driver
     driver.quit()

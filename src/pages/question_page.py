@@ -25,11 +25,10 @@ class QuestionsPage(BasePage):
         }
 
         if question_number in locators:
-            # Находим элемент
-            question = self.find_element(*locators[question_number])
+            # Находим элемент используя методы базового класса для поиска элемента и прокрутки
             self.scroll_to_element(*locators[question_number])
             # Кликаем по элементу
-            question.click()
+            self.click_element(*locators[question_number])
         else:
             raise ValueError(f"Вопрос {question_number} не найден!")
 

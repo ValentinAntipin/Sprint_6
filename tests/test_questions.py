@@ -23,4 +23,4 @@ class TestQuestions:
         page = QuestionsPage(driver)
         page.open_question(question_number)
         actual_text = page.get_question_text(question_number)
-        assert expected_text in actual_text, f"Текст вопроса для {question_number} не совпадает. Ожидалось: {expected_text}, получено: {actual_text}"
+        assert expected_text in  actual_text, f"Текст вопроса для {question_number} не совпадает. Ожидалось: {expected_text}, получено: {actual_text}"

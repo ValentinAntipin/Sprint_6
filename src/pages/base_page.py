@@ -34,3 +34,16 @@ class BasePage:
     def scroll_to_bottom(self):
         #Прокрутка страницы до самого низа
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+
+    def fill_input(self, locator, value):
+        element = self.find_element(*locator)
+        element.send_keys(value)
+
+    def get_current_url(self):
+        return self.driver.current_url
+
+    def switch_to_window(self, window_index):
+        self.driver.switch_to.window(self.driver.window_handles[window_index])
+
+    def close_current_window(self):
+        self.driver.close()

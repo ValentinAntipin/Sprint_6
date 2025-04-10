@@ -1,4 +1,4 @@
-from src.locators.order_page_locators import NAME_FIELD, SURNAME_FIELD, ADDRESS_FIELD, STATION_FIELD, PHONE_FIELD, SUBMIT_BUTTON, DATE_FIELD, DROPDOWN_FIELD, COLOR_FIELD, ORDER_BUTTON, ORDER2_BUTTON
+from src.locators.order_page_locators import NAME_FIELD, SURNAME_FIELD, ADDRESS_FIELD, STATION_FIELD, PHONE_FIELD, SUBMIT_BUTTON, DATE_FIELD, DROPDOWN_FIELD, COLOR_SCOOTER_BLACK, COLOR_SCOOTER_GREY, ORDER_BUTTON, ORDER2_BUTTON
 import allure
 from src.pages.base_page import BasePage
 
@@ -10,11 +10,11 @@ class OrderPage(BasePage):
     @allure.step("Заполнение формы заказа")
     def fill_order_form(self, name, surname, address, station, phone):
         # Заполнение полей формы заказа
-        self.driver.find_element(*NAME_FIELD).send_keys(name)
-        self.driver.find_element(*SURNAME_FIELD).send_keys(surname)
-        self.driver.find_element(*ADDRESS_FIELD).send_keys(address)
-        self.driver.find_element(*STATION_FIELD).send_keys(station)
-        self.driver.find_element(*PHONE_FIELD).send_keys(phone)
+        self.fill_input(NAME_FIELD, name)
+        self.fill_input(SURNAME_FIELD, surname)
+        self.fill_input(ADDRESS_FIELD, address)
+        self.fill_input(STATION_FIELD, station)
+        self.fill_input(PHONE_FIELD, phone)
 
     @allure.step("Нажатие на кнопку 'Далее'")
     def click_submit_button(self):
@@ -24,9 +24,10 @@ class OrderPage(BasePage):
     @allure.step("Заполнение дополнительных полей заказа")
     def fill_additional_order_fields(self, date, rental_period, color):
         # Заполнение дополнительных полей заказа: дата, период аренды, цвет
-        self.driver.find_element(*DATE_FIELD).send_keys(date)
-        self.driver.find_element(*DROPDOWN_FIELD).send_keys(rental_period)
-        self.driver.find_element(*COLOR_FIELD).send_keys(color)
+        self.fill_input(DATE_FIELD, date)
+        self.fill_input(DROPDOWN_FIELD, rental_period)
+        self.fill_input(COLOR_SCOOTER_BLACK, color)
+        self.fill_input(COLOR_SCOOTER_GREY, color)
 
     @allure.step("Нажатие кнопки заказать")
     def submit_order(self):

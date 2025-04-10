@@ -1,6 +1,8 @@
 from src.locators.order_page_locators import SUCCESS_MESSAGE
 import allure
 from src.pages.base_page import BasePage
+from selenium.common.exceptions import NoSuchElementException
+
 
 class SuccessPage(BasePage):
     def __init__(self, driver):
@@ -10,6 +12,7 @@ class SuccessPage(BasePage):
     def is_success_message_present(self):
         # Проверка, что заказ был успешно оформлен
         try:
-            return self.driver.find_element(*SUCCESS_MESSAGE).is_displayed()
-        except:
+            self.find_element(*SUCCESS_MESSAGE)
+            return True
+        except NoSuchElementException:
             return False
